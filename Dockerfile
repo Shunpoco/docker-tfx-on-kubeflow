@@ -1,6 +1,8 @@
 FROM python:3.8.8-buster
 
-USER root
+RUN useradd -m joyvan
+
+USER joyvan
 
 COPY . .
 
@@ -8,8 +10,6 @@ COPY . .
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
 RUN $HOME/.poetry/bin/poetry install
-
-USER javyan
 
 ENV NB_PREFIX="/"
 
