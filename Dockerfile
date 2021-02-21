@@ -2,15 +2,18 @@ FROM python:3.8.8-buster
 
 RUN useradd -m jovyan
 
-USER jovyan
+USER root
+
+WORKDIR /work
 
 COPY . .
 
-# install poetry
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+RUN pip install -r requirements.txt
 
-RUN $HOME/.poetry/bin/poetry install
+USER jovyan
 
-ENV NB_PREFIX="/"
+ENV NB_PREFIX /
 
-CMD ["sh", "-c", "${HOME}/.poetry/bin/poetry run jupyter notebook --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*' --NotebookApp.base_url=${NB_PREFIX}"]
+WORKDIR /home/jovyan
+
+CMD ["sh","-c", "jupyter notebook --notebook-dir=/home/jovyan --ip=0.0.0.0 --no-browser --allow-root --port=8888 --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.allow_origin='*' --NotebookApp.base_url=${NB_PREFIX}"]
