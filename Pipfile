@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+jupyter = "==1.0.0"
+tfx = "==0.27.0"
+kfp = "==1.4.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
