@@ -9,6 +9,7 @@ tfx = "==0.27.0"
 kfp = "==1.4.0"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
 python_version = "3.8"
