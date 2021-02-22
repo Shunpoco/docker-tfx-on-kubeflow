@@ -167,7 +167,7 @@ if __name__ == '__main__':
     metadata_config.mysql_db_name.value = "metadb"
     metadata_config.mysql_db_user.value = "root"
     metadata_config.mysql_db_password.value = ""
-    metadata_config.grpc_config.grpc_service_host.value = 'metadata-grpc-service'
+    metadata_config.grpc_config.grpc_service_host.value = '10.100.244.39' # Cluster IP of metadata-grpc-service
     metadata_config.grpc_config.grpc_service_port.value = '8080'
 
     runner_config = kubeflow_dag_runner.KubeflowDagRunnerConfig(
