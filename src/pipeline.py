@@ -162,6 +162,13 @@ if __name__ == '__main__':
     tfx_image = 'tensorflow/tfx:0.27.0'
 
     metadata_config = kubeflow_dag_runner.get_default_kubeflow_metadata_config()
+    metadata_config.mysql_db_service_host.value = 'mysql.kubeflow'
+    metadata_config.mysql_db_service_port.value = "3306"
+    metadata_config.mysql_db_name.value = "metadb"
+    metadata_config.mysql_db_user.value = "root"
+    metadata_config.mysql_db_password.value = ""
+    metadata_config.grpc_config.grpc_service_host.value = 'metadata-grpc-service'
+    metadata_config.grpc_config.grpc_service_port.value = '8080'
 
     runner_config = kubeflow_dag_runner.KubeflowDagRunnerConfig(
         tfx_image=tfx_image,
