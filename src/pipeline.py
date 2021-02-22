@@ -159,7 +159,7 @@ def _create_pipeline(
     )
 
 if __name__ == '__main__':
-    tfx_image = 'shunpoco/tfx-on-kubeflow:latest'
+    tfx_image = 'tensorflow/tfx:0.27.0'
 
     metadata_config = kubeflow_dag_runner.get_default_kubeflow_metadata_config()
 
