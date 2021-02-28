@@ -1,18 +1,54 @@
 import tensorflow as tf
 import tensorflow_transform as tft
 
-import taxi_constants
+# Categorical features are assumed to each have a maximum value in the dataset.
+MAX_CATEGORICAL_FEATURE_VALUES = [24, 31, 12]
 
-_DENSE_FLOAT_FEATURE_KEYS = taxi_constants.DENSE_FLOAT_FEATURE_KEYS
-_VOCAB_FEATURE_KEYS = taxi_constants.VOCAB_FEATURE_KEYS
-_VOCAB_SIZE = taxi_constants.VOCAB_SIZE
-_OOV_SIZE = taxi_constants.OOV_SIZE
-_FEATURE_BUCKET_COUNT = taxi_constants.FEATURE_BUCKET_COUNT
-_BUCKET_FEATURE_KEYS = taxi_constants.BUCKET_FEATURE_KEYS
-_CATEGORICAL_FEATURE_KEYS = taxi_constants.CATEGORICAL_FEATURE_KEYS
-_FARE_KEY = taxi_constants.FARE_KEY
-_LABEL_KEY = taxi_constants.LABEL_KEY
-_transformed_name = taxi_constants.transformed_name
+CATEGORICAL_FEATURE_KEYS = [
+    'trip_start_hour', 'trip_start_day', 'trip_start_month',
+    'pickup_census_tract', 'dropoff_census_tract', 'pickup_community_area',
+    'dropoff_community_area'
+]
+
+DENSE_FLOAT_FEATURE_KEYS = ['trip_miles', 'fare', 'trip_seconds']
+
+# Number of buckets used by tf.transform for encoding each feature.
+FEATURE_BUCKET_COUNT = 10
+
+BUCKET_FEATURE_KEYS = [
+    'pickup_latitude', 'pickup_longitude', 'dropoff_latitude',
+    'dropoff_longitude'
+]
+
+# Number of vocabulary terms used for encoding VOCAB_FEATURES by tf.transform
+VOCAB_SIZE = 1000
+
+# Count of out-of-vocab buckets in which unrecognized VOCAB_FEATURES are hashed.
+OOV_SIZE = 10
+
+VOCAB_FEATURE_KEYS = [
+    'payment_type',
+    'company',
+]
+
+# Keys
+LABEL_KEY = 'tips'
+FARE_KEY = 'fare'
+
+def transformed_name(key):
+  return key + '_xf'
+
+
+_DENSE_FLOAT_FEATURE_KEYS = DENSE_FLOAT_FEATURE_KEYS
+_VOCAB_FEATURE_KEYS = VOCAB_FEATURE_KEYS
+_VOCAB_SIZE = VOCAB_SIZE
+_OOV_SIZE = OOV_SIZE
+_FEATURE_BUCKET_COUNT = FEATURE_BUCKET_COUNT
+_BUCKET_FEATURE_KEYS = BUCKET_FEATURE_KEYS
+_CATEGORICAL_FEATURE_KEYS = CATEGORICAL_FEATURE_KEYS
+_FARE_KEY = FARE_KEY
+_LABEL_KEY = LABEL_KEY
+_transformed_name = transformed_name
 
 
 def preprocessing_fn(inputs):
