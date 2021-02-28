@@ -154,7 +154,7 @@ def _create_pipeline(
             model_resolver, evaluator, pusher
         ],
         beam_pipeline_args=[f'--direct_num_workers={direct_num_workers}'],
-        enable_cache=False
+        enable_cache=True,
     )
 
 if __name__ == '__main__':
