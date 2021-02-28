@@ -16,7 +16,7 @@ from tfx.components import SchemaGen
 from tfx.components import StatisticsGen
 from tfx.components import Trainer
 from tfx.components import Transform
-from tfx.components.base import executor_spec
+from tfx.dsl.components.base import executor_spec
 from tfx.components.trainer.executor import GenericExecutor
 
 from tfx.dsl.experimental import latest_blessed_model_resolver
@@ -33,12 +33,12 @@ from tfx.utils.dsl_utils import external_input
 
 from kfp import onprem
 
-_pipeline_name = 'chicago_taxi'
+_pipeline_name = 'chicago_taxi3'
 _persistent_volume_claim = 'data'
 _persistent_volume = 'pvc-b59868a7-0d99-4cdd-9a28-cc14bf87ab46'
 _persistent_volume_mount = '/home/jovyan/data'
 
-_input_base = os.path.join(_persistent_volume_mount, 'src')
+_input_base = os.path.join(_persistent_volume_mount, 'docker-tfx-on-kubeflow/src')
 _output_base = os.path.join(_persistent_volume_mount, 'pipelines')
 _tfx_root = os.path.join(_persistent_volume_mount, 'tfx')
 _pipeline_root = os.path.join(_tfx_root, _pipeline_name)
@@ -56,10 +56,9 @@ def _create_pipeline(
     transform_module_file: Text, train_module_file: Text, serving_model_dir: Text, 
     direct_num_workers: int,
 ) -> pipeline.Pipeline:
-    examples = external_input(data_root)
     
     # Component 1: Data Ingestion
-    example_gen = CsvExampleGen(input=examples)
+    example_gen = CsvExampleGen(input_base=data_root)
     
     # Component 2: Statistics
     statistics_gen = StatisticsGen(
@@ -155,7 +154,7 @@ def _create_pipeline(
             model_resolver, evaluator, pusher
         ],
         beam_pipeline_args=[f'--direct_num_workers={direct_num_workers}'],
-        enable_cache=True
+        enable_cache=False
     )
 
 if __name__ == '__main__':
